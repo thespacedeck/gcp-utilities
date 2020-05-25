@@ -1,5 +1,5 @@
-const tracer = require('./tracer');
+const tracerInstance = require('./tracer');
 
 module.exports = {
-    tracer
+    tracerInstance
 };
