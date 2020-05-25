@@ -20,14 +20,15 @@ $ npm install tt-cloud-tools
 In order to gain the TypeScript typings (for intellisense / autocomplete) while using CommonJS imports with `require()` use the following approach:
 
 ```js
-const tracerInstance = require('tt-cloud-tools');
-const trace = tracerInstance.createTracer({
-    projectId: 'YOUR-GOOGLE-PROJECT-ID',
-    keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON',
+const Tracer = require('tt-cloud-tools');
+
+let tracerInstance = new Tracer.constructTracer({
+    projectId: 'corporate-rates',
+    keyPath: './corporate-rates-523779d3f013.json',
     plugins: {
         http: true, // boolean: to include in constructor of NodeTracerProvider
-        https: true,
-        axios: true,
+        https: false,
+        axios: false
     }
 });
 ```

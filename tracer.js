@@ -2,11 +2,12 @@ const opentelemetry = require("@opentelemetry/api");
 const { NodeTracerProvider } = require("@opentelemetry/node");
 const { SimpleSpanProcessor } = require("@opentelemetry/tracing");
 
-module.exports = class tracer {
+module.exports = class Tracer {
     constructor(config) {
         this.projectId = config.projectId;
         this.keyPath = config.keyPath;
         this.plugins = config.plugins;
+        this.api = opentelemetry;
     }
     
     /**
@@ -17,21 +18,21 @@ module.exports = class tracer {
      * @param keyPath path to service account json
      * @param otPlugins object of Open Telementry plugins to be activated
      */
-    static createTracer(projectId, keyPath, plugins) {
+    createTracer() {
 
         // Create a provider for activating and tracking spans
         const tracerProvider = new NodeTracerProvider({
             plugins: {
                 http: {
-                    enabled: plugins.http === true ? true : false,
+                    enabled: this.plugins.http === true ? true : false,
                     path: "@opentelemetry/plugin-http"
                 },
                 https: {
-                    enabled: plugins.https === true ? true : false,
+                    enabled: this.plugins.https === true ? true : false,
                     path: "@opentelemetry/plugin-https"
                 },
                 express: {
-                    enabled: plugins.express === true ? true : false,
+                    enabled: this.plugins.express === true ? true : false,
                     path: "@opentelemetry/plugin-express"
                 }
             }
@@ -41,8 +42,8 @@ module.exports = class tracer {
         const { TraceExporter } = require('@google-cloud/opentelemetry-cloud-trace-exporter');
         // Initialize the exporter
         const exporter = new TraceExporter({
-            projectId: projectId,
-            keyFilename: keyPath,
+            projectId: this.projectId,
+            keyFilename: this.keyPath,
         });
 
         // Configure a span processor for the tracer
@@ -53,10 +54,14 @@ module.exports = class tracer {
 
         const tracer = opentelemetry.trace.getTracer();
 
-        return { 
-            opentelemetry,
-            tracer
-        }
+        return tracer;
+    }
+
+    /**
+     * Returns the opentelemetry construct as api
+     */
+    getApi() {
+        return opentelemetry;
     }
   
 }
