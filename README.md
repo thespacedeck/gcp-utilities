@@ -23,14 +23,17 @@ In order to gain the TypeScript typings (for intellisense / autocomplete) while 
 const { Tracer } = require('tt-cloud-tools');
 
 let tracerInstance = new Tracer({
-    projectId: 'corporate-rates',
-    keyPath: './corporate-rates-523779d3f013.json',
+    projectId: 'YOUR-GOOGLE-PROJECT-ID',
+    keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON',
     plugins: {
         http: true, // boolean: to include in constructor of NodeTracerProvider
-        https: false,
+        https: true,
         axios: false
     }
 });
+
+let tracer = tracerInstance.createTracer();
+let api = tracerInstance.getApi();
 ```
 
 #### Resources:
