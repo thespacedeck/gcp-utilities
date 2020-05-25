@@ -1,0 +1,12 @@
+{
+  "name": "tt-cloud-utilities",
+  "version": "1.0.0",
+  "description": "nodejs project utilities for gcp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "thespacedeck@gmail.com",
+  "license": "ISC",
+  "homepage": "trooptravel.com"
+}
