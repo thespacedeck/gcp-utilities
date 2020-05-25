@@ -21,15 +21,15 @@ In order to gain the TypeScript typings (for intellisense / autocomplete) while 
 
 ```js
 const tracerInstance = require('tt-cloud-utilities');
-const trace = tracerInstance.createTracer(
-    projectId: 'YOUR-GOOGLE-PROJECT-ID'
-    keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON'
+const trace = tracerInstance.createTracer({
+    projectId: 'YOUR-GOOGLE-PROJECT-ID',
+    keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON',
     plugins: {
         http: true, // boolean: to include in constructor of NodeTracerProvider
         https: true,
         axios: true,
     }
-);
+});
 ```
 
 #### Resources:
@@ -49,5 +49,5 @@ Init Git & commands in directory
 - git remote -v
 
 Push to this GSC repo
-- git remote add google https://source.developers.google.com/p/tt-hotel-api/r/tt-cloud-utilities // Add your Cloud Repository as a remote
+- git remote add google https://source.developers.google.com/p/tt-hotel-api/r/tt-cloud-utilities // Add your Cloud Repository as a remote - if not created via GCP
 - git push --all google // Push from your local Git repository
