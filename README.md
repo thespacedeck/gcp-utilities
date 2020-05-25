@@ -1,4 +1,4 @@
-## Trooptravel Google Cloud Utilities
+## Trooptravel Google Cloud Tools
 A few tools to standardise certain code blocks within the team. Tools include:
 
 - Google Cloud Trace Instancing
@@ -11,7 +11,7 @@ A few tools to standardise certain code blocks within the team. Tools include:
 Using npm:
 
 ```bash
-$ npm install tt-cloud-utilities
+$ npm install tt-cloud-tools
 ```
 
 ## Examples
@@ -20,7 +20,7 @@ $ npm install tt-cloud-utilities
 In order to gain the TypeScript typings (for intellisense / autocomplete) while using CommonJS imports with `require()` use the following approach:
 
 ```js
-const tracerInstance = require('tt-cloud-utilities');
+const tracerInstance = require('tt-cloud-tools');
 const trace = tracerInstance.createTracer({
     projectId: 'YOUR-GOOGLE-PROJECT-ID',
     keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON',

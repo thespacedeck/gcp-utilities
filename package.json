@@ -1,5 +1,5 @@
 {
-  "name": "tt-cloud-utilities",
+  "name": "tt-cloud-tools",
   "version": "1.0.0",
   "description": "nodejs project utilities for gcp",
   "main": "index.js",
