@@ -1,6 +1,6 @@
 {
   "name": "tt-cloud-tools",
-  "version": "1.0.3.1",
+  "version": "1.0.4",
   "description": "nodejs project utilities for gcp",
   "main": "index.js",
   "scripts": {
@@ -10,12 +10,15 @@
   "license": "ISC",
   "homepage": "trooptravel.com",
   "dependencies": {
+    "@google-cloud/error-reporting": "^1.1.3",
+    "@google-cloud/logging-bunyan": "^2.0.3",
     "@google-cloud/opentelemetry-cloud-trace-exporter": "^0.3.0",
     "@opentelemetry/api": "^0.8.2",
     "@opentelemetry/node": "^0.8.2",
     "@opentelemetry/plugin-express": "^0.7.0",
     "@opentelemetry/plugin-http": "^0.8.2",
     "@opentelemetry/plugin-https": "^0.8.2",
-    "@opentelemetry/tracing": "^0.8.2"
+    "@opentelemetry/tracing": "^0.8.2",
+    "bunyan": "^1.8.12"
   }
 }

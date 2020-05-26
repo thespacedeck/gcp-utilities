@@ -36,9 +36,66 @@ let tracer = tracerInstance.createTracer();
 let api = tracerInstance.getApi();
 ```
 
+### Propagate trace between services
+This will forward 'traceparent' in header to subsequent services/projects
+
+```js
+const axios = require("axios");
+
+function clientDemoRequest() {
+    console.log("Starting client demo request");
+
+    const span = tracer.startSpan("clientDemoRequest()", {
+        parent: tracer.getCurrentSpan(),
+        kind: api.SpanKind.SERVER
+    });
+
+    tracer.withSpan(span, async () => {
+        span.addEvent('sending request');
+        await axios.get("request/url")
+        .then(results => {
+            
+        })
+        span.setStatus({ code: api.CanonicalCode.OK });
+
+        span.end();
+
+        // The process must remain alive for the duration of the exporter flush
+        // timeout or spans might be dropped
+        console.log("Client request complete, waiting to ensure spans flushed...");
+        setTimeout(() => {
+            console.log("Done 🎉");
+        }, 2000);
+    });
+}
+
+clientDemoRequest();
+```
+
 #### Resources:
 
-- Open Telemetry
+- [`Open Telemetry`](https://github.com/open-telemetry/opentelemetry-js)
+
+### Google Cloud Logger
+In order to gain the TypeScript typings (for intellisense / autocomplete) while using CommonJS imports with `require()` use the following approach:
+
+```js
+const { Logger } = require('tt-cloud-tools');
+
+let loggerInstance = new Logger({
+    projectId: 'YOUR-GOOGLE-PROJECT-ID',
+    keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON'
+});
+
+let logger = loggerInstance.createLogger();
+const serviceName = 'default';
+const projectVersion = '1.0.8';
+let reporter = loggerInstance.createReporter(serviceName, projectVersion);
+
+logger.error(err); // submits error to Stackdriver
+reporter.error(err); // submits error to Error Module
+logger.error(new Error(err)); // submits error to both Stackdriver and Error Module
+```
 
 ## Internal management
 Provide your authentication credentials
