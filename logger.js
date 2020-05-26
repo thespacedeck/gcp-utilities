@@ -9,10 +9,14 @@ module.exports = class Logger {
      *
      * @param projectId Google projectId
      * @param keyPath path to service account json
+     * @param serviceName Google specified service name, if not defualt
+     * @param projectVersion path to service account json
      */
     constructor(config) {
         this.projectId = config.projectId;
         this.keyPath = config.keyPath;
+        this.serviceName = config.serviceName ? config.serviceName : 'defualt';
+        this.projectVersion = config.projectVersion ? config.projectVersion : null;
     }
     
     /**
@@ -27,7 +31,7 @@ module.exports = class Logger {
         });
         // Create a Bunyan logger that streams to Stackdriver Logging
         const logger = bunyan.createLogger({
-            name: serviceName,
+            name: this.serviceName,
             streams: [
                 // Log to the console at 'info' and above
                 {stream: process.stdout, level: 'info'},
@@ -42,19 +46,16 @@ module.exports = class Logger {
     /**
      * Register this logger  to report errors to Google Error Module.
      * Undefined values may be replaced with defaults
-     *
-     * @param serviceName defualt service to report on
-     * @param projectVersion version of project/service
      */
-    createReporter(serviceName, projectVersion) {
+    createReporter() {
         const reportError = new ErrorReporting(
             {
                 projectId: this.projectId,
                 keyFilename: this.keyPath,
                 reportMode: 'always',
                 serviceContext: {
-                    service: serviceName,
-                    version: projectVersion
+                    service: this.serviceName,
+                    version: this.projectVersion
                 }
             }
         );

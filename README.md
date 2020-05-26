@@ -81,20 +81,20 @@ In order to gain the TypeScript typings (for intellisense / autocomplete) while 
 
 ```js
 const { Logger } = require('tt-cloud-tools');
-
+ 
 let loggerInstance = new Logger({
     projectId: 'YOUR-GOOGLE-PROJECT-ID',
-    keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON'
+    keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON',
+    serviceName: 'default',
+    projectVersion: '1.0.8'
 });
-
+ 
 let logger = loggerInstance.createLogger();
-const serviceName = 'default';
-const projectVersion = '1.0.8';
-let reporter = loggerInstance.createReporter(serviceName, projectVersion);
-
-logger.error(err); // submits error to Stackdriver
-reporter.error(err); // submits error to Error Module
-logger.error(new Error(err)); // submits error to both Stackdriver and Error Module
+let reporter = loggerInstance.createReporter();
+ 
+logger.error(error); // submits error to Stackdriver
+reporter.report(error); // submits error to Error Module
+logger.error(new Error(error)); // submits error to both Stackdriver and Error Module
 ```
 
 ## Internal management
