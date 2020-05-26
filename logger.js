@@ -1,5 +1,5 @@
 const bunyan = require('bunyan');
-const { LoggingBunyan } = require('@google-cloud/logging-bunyan');
+const { LoggingBunyan, LOGGING_TRACE_KEY } = require('@google-cloud/logging-bunyan');
 const { ErrorReporting } = require('@google-cloud/error-reporting');
 
 module.exports = class Logger {
@@ -61,6 +61,15 @@ module.exports = class Logger {
         );
 
         return reportError;
+    }
+
+    /**
+     * Returns the trace key provided by bunyan to provide the log in Google Cloud Trace
+     */
+    async getTraceKey(traceId) {
+        return {
+            [LOGGING_TRACE_KEY]: `projects/${this.projectId}/traces/${traceId}`
+        };
     }
   
 }

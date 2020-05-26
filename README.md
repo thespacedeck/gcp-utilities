@@ -93,8 +93,11 @@ let logger = loggerInstance.createLogger();
 let reporter = loggerInstance.createReporter();
  
 logger.error(error); // submits error to Stackdriver
-reporter.report(error); // submits error to Error Module
+reporter.report(error); // reports error to Error Module
 logger.error(new Error(error)); // submits error to both Stackdriver and Error Module
+
+// If you wish to view log entries inline with trace spans in the Stackdriver Trace Viewer.
+logger.error(await loggerInstance.getTraceKey(tracer.getCurrentSpan().spanContext.traceId), new Error("Error now logged inline with trace span"));  
 ```
 
 ## Internal management
