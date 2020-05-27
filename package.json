@@ -19,6 +19,7 @@
     "@opentelemetry/plugin-http": "^0.8.2",
     "@opentelemetry/plugin-https": "^0.8.2",
     "@opentelemetry/tracing": "^0.8.2",
-    "bunyan": "^1.8.12"
+    "bunyan": "^1.8.12",
+    "mysql": "^2.18.1"
   }
 }

@@ -93,11 +93,20 @@ let logger = loggerInstance.createLogger();
 let reporter = loggerInstance.createReporter();
  
 logger.error(error); // submits error to Stackdriver
-reporter.report(error); // reports error to Error Module
-logger.error(new Error(error)); // submits error to both Stackdriver and Error Module
+reporter.report(error); // reports error to Error Reporting
+logger.error(new Error(error)); // submits error to both Stackdriver and Error Reporting
 
-// If you wish to view log entries inline with trace spans in the Stackdriver Trace Viewer.
+// If you wish to view log entries inline with trace spans in the Stackdriver Trace Viewer. This means log entry shows in Cloud Logging, Error Reporting and Cloud Trace
 logger.error(await loggerInstance.getTraceKey(tracer.getCurrentSpan().spanContext.traceId), new Error("Error now logged inline with trace span"));  
+```
+
+### MySQL Client for Google Cloud SQL
+In order to gain the TypeScript typings (for intellisense / autocomplete) while using CommonJS imports with `require()` use the following approach:
+
+```js
+const { MySql } = require('tt-cloud-tools');
+ 
+// coming soon
 ```
 
 ## Internal management
