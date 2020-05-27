@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const util = require('util')
 
 module.exports = class MySql {
     /**
@@ -39,20 +40,35 @@ module.exports = class MySql {
         connection.connect(function(err) {
             if(err) {
                 console.log(err)
-            
             } 
-            connection.end()
+        });
+
+        connection.query(sql, values, function(err) {
+
+            connection.end(); // close the connection
+    
+            if (err) {
+                console.log(err)
+            }
+    
+            // Execute the callback
+            next.apply(this, arguments);
+    
         });
 
         if(promise === true){
-            console.log('making promise()')
-            connection = connection.promise()
+            connection.query = util.promisify(connection.query)
         }
 
         return connection;
 
     }
 
+    /**
+     * Create a pool connection
+     *
+     * @param promise Bolean, to forse a promise on the return
+     */
     pool(promise) {
 
         let pool = null;
@@ -62,19 +78,21 @@ module.exports = class MySql {
             user: this.user,
             database: this.database,
             password: this.password,
-            connectionLimit: this.connectionLimit,
+            connectionLimit: this.connectionLimit
         }
 
-        pool = mysql.createPool(mysqlConfig)
+        pool = mysql.createPool(mysqlConfig);
 
-        pool.getConnection((err, conn) => {
+        pool.getConnection((err, connection) => {
             if (err) {
                 console.log(err)
             }
+            if (connection) connection.release()
+            return
         })
 
         if(promise === true){
-            pool = pool.promise()
+            pool.query = util.promisify(pool.query)
         }
 
         return pool;

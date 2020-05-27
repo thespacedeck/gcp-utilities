@@ -106,7 +106,94 @@ In order to gain the TypeScript typings (for intellisense / autocomplete) while 
 ```js
 const { MySql } = require('tt-cloud-utilities');
  
-// coming soon
+const connection = new MySql({
+    host: 'localhost',
+    user: 'root',
+    database: 'accomodation',
+    password: '',
+    connectionLimit: 5
+})
+
+// Example 1: Promised based execution
+const mysql = connection.connect(true)
+async function executeQuery(){
+    // simple query
+    await mysql.query('SELECT * FROM `hp_accomodation` LIMIT 1')
+        .then( ([results, fields]) => {
+            console.log(results); 
+        })
+        .catch( error => {
+            
+        })
+
+    console.log('finished')
+}
+executeQuery()
+
+// Example 2: Promised based await queries
+const mysql = connection.connect(true)
+async function executeWithAwait(){
+    let results = await mysql.query('SELECT * FROM `hp_accomodation` LIMIT 1');
+    console.log(results)
+    console.log('finished') 
+}
+executeWithAwait()
+
+// Example 3: Promised based Pool Connections
+const mysql = connection.pool(true)
+console.log('created pool')
+async function executeQueryInPool(){
+    await asyncForEach([1, 2], async (num) => {
+        let results = await mysql.query(`SELECT * FROM hp_accomodation LIMIT ?`,
+            [num]
+        );
+        console.log(results)
+    })
+    console.log('finished')  
+    mysql.end() 
+}
+executeQueryInPool()
+
+async function asyncForEach(array, callback) {
+    for (let index = 0; index < array.length; index++) {
+        await callback(array[index], index, array);
+    }
+}
+
+// Example 4: Async queries
+const mysql = connection.connect(false)
+async function executeWithAwait(){
+    mysql.query('SELECT * FROM `hp_accomodation`');
+    console.log('query was deployed and connection will automatically end() when finished')  
+}
+executeWithAwait()
+
+// Example 5: Pool based async queries in loop
+const mysql = connection.pool(false)
+console.log('created pool')
+async function executeQueryInPool(){
+    await asyncForEach([1, 2], async (num) => {
+        mysql.query(`SELECT * FROM hp_accomodation LIMIT ?`,
+            [num]
+        );
+        console.log('query was deployed')  
+    })
+    console.log('pool connection will close when becoming stale')  
+    mysql.end() 
+}
+executeQueryInPool()
+
+async function asyncForEach(array, callback) {
+    for (let index = 0; index < array.length; index++) {
+        await callback(array[index], index, array);
+    }
+}
+
+// With the above example, you can query the state of your deployed queries and close the pool on finalisation in order to preserve concurrency
+console.log(`All Connections ${pool._allConnections.length}`);
+console.log(`Acquiring Connections ${pool._acquiringConnections.length}`);
+console.log(`Free Connections ${pool._freeConnections.length}`);
+console.log(`Queue Connections ${pool._connectionQueue.length}`);
 ```
 
 ## Internal management
