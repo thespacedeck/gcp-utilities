@@ -20,7 +20,7 @@ module.exports = class MySql {
      *
      * @param promise Bolean, to forse a promise on the return
      */
-    connect(promise) {
+    connect(promise, mgmt) {
 
         let connection = null;
 
@@ -31,7 +31,9 @@ module.exports = class MySql {
                 console.log(err)
             } 
 
-            connection.end()
+            if(mgmt === true){
+                connection.end()
+            }
         });
 
         if(promise === true){

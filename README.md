@@ -120,7 +120,7 @@ const connection = new MySql({
 })
 
 // Example 1: Promised based execution
-const mysql = connection.connect(true)
+const mysql = connection.connect(true, true)
 async function executeQuery(){
     // simple query
     await mysql.query('SELECT * FROM `hp_accomodation` LIMIT 1')
@@ -136,7 +136,7 @@ async function executeQuery(){
 executeQuery()
 
 // Example 2: Promised based await queries
-const mysql = connection.connect(true)
+const mysql = connection.connect(true, true)
 async function executeWithAwait(){
     let results = await mysql.query('SELECT * FROM `hp_accomodation` LIMIT 1');
     console.log(results)
@@ -166,7 +166,7 @@ async function asyncForEach(array, callback) {
 }
 
 // Example 4: Async queries
-const mysql = connection.connect(false)
+const mysql = connection.connect(false, true)
 async function executeWithAwait(){
     mysql.query('SELECT * FROM `hp_accomodation`');
     console.log('query was deployed and connection will automatically end() when finished')  
@@ -210,11 +210,14 @@ Provide your authentication credentials
 Init Git & commands in directory 
 - git init
 - git add .
-- git commit -m "Initial commit"
 - git remote add origin remote repository URL
+- git commit -m "Initial commit"
+- npm version patch // to increment your package version
 - git push origin master
 - git remote -v
 
 Push to this GSC repo
 - git remote add google https://source.developers.google.com/p/tt-hotel-api/r/tt-cloud-utilities // Add your Cloud Repository as a remote - if not created via GCP
 - git push --all google // Push from your local Git repository
+- npm publish // publish/update to npm
+- npm unpublish // remove package from npm (there are some rules you need to adhere to...)
