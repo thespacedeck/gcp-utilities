@@ -179,7 +179,6 @@ async function executeQueryInPool(){
         console.log('query was deployed')  
     })
     console.log('pool connection will close when becoming stale')  
-    mysql.end() 
 }
 executeQueryInPool()
 
@@ -190,10 +189,12 @@ async function asyncForEach(array, callback) {
 }
 
 // With the above example, you can query the state of your deployed queries and close the pool on finalisation in order to preserve concurrency
-console.log(`All Connections ${pool._allConnections.length}`);
-console.log(`Acquiring Connections ${pool._acquiringConnections.length}`);
-console.log(`Free Connections ${pool._freeConnections.length}`);
-console.log(`Queue Connections ${pool._connectionQueue.length}`);
+setTimeout(function(){ 
+    console.log(`All Connections ${mysql._allConnections.length}`);
+    console.log(`Acquiring Connections ${mysql._acquiringConnections.length}`);
+    console.log(`Free Connections ${mysql._freeConnections.length}`);
+    console.log(`Queue Connections ${mysql._connectionQueue.length}`);
+}, 3000);
 ```
 
 ## Internal management
