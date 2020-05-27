@@ -11,7 +11,11 @@ A few utilities to standardise certain code blocks within the team. utilities in
 Using npm:
 
 ```bash
+# install
 $ npm install tt-cloud-utilities
+
+#update
+$ npm i tt-cloud-utilities@latest
 ```
 
 ## Examples
@@ -190,6 +194,7 @@ async function asyncForEach(array, callback) {
 }
 
 // With the above example, you can query the state of your deployed queries and close the pool on finalisation in order to preserve concurrency
+// Remember, calling connection.pool(false) which equals createPool() from the repo, will establish a connection in itself
 setTimeout(function(){ 
     console.log(`All Connections ${mysql._allConnections.length}`);
     console.log(`Acquiring Connections ${mysql._acquiringConnections.length}`);
