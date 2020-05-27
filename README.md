@@ -1,5 +1,5 @@
-## Trooptravel Google Cloud Tools
-A few tools to standardise certain code blocks within the team. Tools include:
+## Trooptravel Google Cloud utilities
+A few utilities to standardise certain code blocks within the team. utilities include:
 
 - Google Cloud Trace Instancing
 - Google Stackdriver Logger enhanced by Bunyan and Google Error Reporting
@@ -11,7 +11,7 @@ A few tools to standardise certain code blocks within the team. Tools include:
 Using npm:
 
 ```bash
-$ npm install tt-cloud-tools
+$ npm install tt-cloud-utilities
 ```
 
 ## Examples
@@ -20,7 +20,7 @@ $ npm install tt-cloud-tools
 In order to gain the TypeScript typings (for intellisense / autocomplete) while using CommonJS imports with `require()` use the following approach:
 
 ```js
-const { Tracer } = require('tt-cloud-tools');
+const { Tracer } = require('tt-cloud-utilities');
 
 let tracerInstance = new Tracer({
     projectId: 'YOUR-GOOGLE-PROJECT-ID',
@@ -80,7 +80,7 @@ clientDemoRequest();
 In order to gain the TypeScript typings (for intellisense / autocomplete) while using CommonJS imports with `require()` use the following approach:
 
 ```js
-const { Logger } = require('tt-cloud-tools');
+const { Logger } = require('tt-cloud-utilities');
  
 let loggerInstance = new Logger({
     projectId: 'YOUR-GOOGLE-PROJECT-ID',
@@ -104,7 +104,7 @@ logger.error(await loggerInstance.getTraceKey(tracer.getCurrentSpan().spanContex
 In order to gain the TypeScript typings (for intellisense / autocomplete) while using CommonJS imports with `require()` use the following approach:
 
 ```js
-const { MySql } = require('tt-cloud-tools');
+const { MySql } = require('tt-cloud-utilities');
  
 // coming soon
 ```
