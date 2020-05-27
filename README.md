@@ -105,7 +105,8 @@ In order to gain the TypeScript typings (for intellisense / autocomplete) while 
 
 ```js
 const { MySql } = require('tt-cloud-utilities');
- 
+
+// All connection configurations from the mysql repo is available
 const connection = new MySql({
     host: 'localhost',
     user: 'root',

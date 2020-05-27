@@ -12,11 +12,7 @@ module.exports = class MySql {
      * @param password mysql password
      */
     constructor(config) {
-        this.host = config.host;
-        this.user = config.user;
-        this.database = config.database ? config.database : null;
-        this.password = config.password ? config.password : null;
-        this.connectionLimit = config.connectionLimit ? config.connectionLimit : 5;
+        this.connectionConfig = config;
     }
     
     /**
@@ -28,14 +24,7 @@ module.exports = class MySql {
 
         let connection = null;
 
-        const mysqlConfig = {
-            host: this.host,
-            user: this.user,
-            database: this.database,
-            password: this.password
-        }
-
-        connection = mysql.createConnection(mysqlConfig);
+        connection = mysql.createConnection(this.connectionConfig);
 
         connection.connect(function(err) {
             if(err) {
@@ -62,15 +51,7 @@ module.exports = class MySql {
 
         let pool = null;
 
-        const mysqlConfig = {
-            host: this.host,
-            user: this.user,
-            database: this.database,
-            password: this.password,
-            connectionLimit: this.connectionLimit
-        }
-
-        pool = mysql.createPool(mysqlConfig);
+        pool = mysql.createPool(this.connectionConfig);
 
         pool.getConnection((err, connection) => {
             if (err) {
