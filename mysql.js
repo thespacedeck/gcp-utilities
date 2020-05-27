@@ -43,19 +43,6 @@ module.exports = class MySql {
             } 
         });
 
-        connection.query(sql, values, function(err) {
-
-            connection.end(); // close the connection
-    
-            if (err) {
-                console.log(err)
-            }
-    
-            // Execute the callback
-            next.apply(this, arguments);
-    
-        });
-
         if(promise === true){
             connection.query = util.promisify(connection.query)
         }
