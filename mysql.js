@@ -41,6 +41,8 @@ module.exports = class MySql {
             if(err) {
                 console.log(err)
             } 
+
+            connection.end()
         });
 
         if(promise === true){
