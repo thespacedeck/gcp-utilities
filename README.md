@@ -222,6 +222,12 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(process.env.PORT || 8080);
+
+// -- automatically catch error in route and format it when passed to express error handler
+const { catchAsync } = require('tt-cloud-utilities')
+app.use('/places', catchAsync(async (req, res, next) => {
+    new Error('Oeps, there is an error on this line...')
+});
 ```
 
 ## When used manually:
