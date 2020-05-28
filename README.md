@@ -5,6 +5,7 @@ A few utilities to standardise certain code blocks within the team. utilities in
 - Google Stackdriver Logger enhanced by Bunyan and Google Error Reporting
 - Firebase instancing and general CRUD Commands
 - MySQL instancing and general CRUD Commands
+- Centralised Error Handling in Express (via middleware with manual override: i.e. in routes)
 
 ## Installing
 
@@ -201,6 +202,39 @@ setTimeout(function(){
     console.log(`Free Connections ${mysql._freeConnections.length}`);
     console.log(`Queue Connections ${mysql._connectionQueue.length}`);
 }, 3000);
+```
+
+## Examples
+
+### Centralised Error Handling
+In order to gain the TypeScript typings (for intellisense / autocomplete) while using CommonJS imports with `require()` use the following approach:
+
+## When used as middleware:
+```js
+const { ErrorMiddleware } = require('tt-cloud-utilities')
+const apiName = require('./package.json').name;
+const projectVersion = require('./package.json').version;
+let errorMiddleware = new ErrorMiddleware(apiName, projectVersion);
+
+// strictly to be used last in line before app.listin()
+app.use((err, req, res, next) => {
+    errorMiddleware.errorResponse(err, req, res, next)
+});
+
+app.listen(process.env.PORT || 8080);
+```
+
+## When used manually:
+```js
+const { AppError } = require('tt-cloud-utilities')
+app.all('*', (req, res, next) => {
+    next(
+        new AppError(
+            `Can't find ${req.originalUrl} on this server!`, // Error Message
+            404 // specified error code, else will default to 500
+        )
+    );
+});
 ```
 
 ## Internal management
