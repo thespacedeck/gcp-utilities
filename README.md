@@ -214,7 +214,7 @@ Init Git & commands in directory
 - git commit -m "Initial commit"
 - npm version patch // to increment your package version
 - git push origin master
-- git remote -v
+- git remote -v // list repo destinations - can be used in '$ git remote add google'
 
 Push to this GSC repo
 - git remote add google https://source.developers.google.com/p/tt-hotel-api/r/tt-cloud-utilities // Add your Cloud Repository as a remote - if not created via GCP
