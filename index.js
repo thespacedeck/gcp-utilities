@@ -1,7 +1,7 @@
 const Tracer = require('./tracer');
 const Logger = require('./logger');
 const MySql = require('./mysql');
-const { AppError, catchAsync, errorMiddleware } = require('./app-error');
+const { AppError, catchAsync, ErrorMiddleware } = require('./app-error');
 
 module.exports = {
     Tracer, 
@@ -9,5 +9,5 @@ module.exports = {
     MySql,
     AppError, 
     catchAsync,
-    errorMiddleware
+    ErrorMiddleware
 };

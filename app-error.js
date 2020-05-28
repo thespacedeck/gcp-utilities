@@ -1,13 +1,3 @@
-// catch all errors from routes with this catchAsync 
-// and then push to epress for formatted response
-const catchAsync = fn => {
-    return (req, res, next) => {
-        fn(req, res, next).catch(err => {
-            next(err)
-        });
-    };
-};
-  
 // format the response for clients to consume
 class AppError extends Error {
     constructor(trace, message, statusCode) {
@@ -22,30 +12,54 @@ class AppError extends Error {
     }
 }
 
-let errorMiddleware = function (err, req, res, next) {
-    err.statusCode = err.statusCode || 500;
-    err.status = err.status || 'error';
+// catch all errors from routes with this catchAsync 
+// and then push to epress for formatted response
+const catchAsync = fn => {
+    return (req, res, next) => {
+        fn(req, res, next).catch(err => {
+            next(err)
+        });
+    };
+};
 
-    res.status(err.statusCode).json({
-        troopTravel: [
-            { 
-                api: 'TT Hotel API', 
-                version: projectVersion,
-                ERROR: {
-                    code: err.statusCode,
-                    trace: err.trace,
-                    status: err.status,
-                    message: err.message,
-                    stackTrace: err.stack.split('\n')
+class ErrorMiddleware {
+    /**
+     * Construct this error middleware to use project details
+     * Undefined values may be replaced with defaults
+     *
+     * @param apiName service name
+     * @param projectVersion service version
+     */
+    constructor(apiName, projectVersion) {
+        this.apiName = apiName;
+        this.projectVersion = projectVersion;
+    }
+
+    errorResponse(err, req, res, next) {
+        err.statusCode = err.statusCode || 500;
+        err.status = err.status || 'error';
+    
+        res.status(err.statusCode).json({
+            troopTravel: [
+                { 
+                    api: this.apiName, 
+                    version: this.projectVersion,
+                    ERROR: {
+                        code: err.statusCode,
+                        trace: err.trace,
+                        status: err.status,
+                        message: err.message,
+                        stackTrace: err.stack.split('\n')
+                    }
                 }
-            }
-        ]
-    });
-    next()
+            ]
+        });
+    }
+
 }
 
 module.exports = { 
     AppError, 
     catchAsync,
-    errorMiddleware
+    ErrorMiddleware
 }
