@@ -248,23 +248,23 @@ In order to gain the TypeScript typings (for intellisense / autocomplete) while 
 ```js
 const { TasksClient } = require('tt-cloud-utilities');
  
-// Cloud Task Client
+// CLOOUDTASK CLIENT
 const cloudTasksClient = new TasksClient({
-    projectId: 'YOUR-GOOGLE-PROJECT-ID',
-    keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON'
+    projectId: 'tt-hotel-api',
+    keyPath: './tt-hotel-api-defualt-service.json',
 });
 
 // content of the task
 const payload = {
-    property: 'property-value'
+    prop: 'test-from-repo'
 }
 
 cloudTasksClient.sendTask({
     method: 'POST', 
-    url: `URL`, 
+    url: `https://url.com`, 
     body: payload, 
-    queue: 'queue-name', 
-    location: 'us-central1'
+    queue: 'my-queue', 
+    location: 'europe-west1'
 })
 ```
 

@@ -30,6 +30,7 @@ module.exports = class TasksClient {
      *
      */
     async sendTask(config) {
+        console.log(config)
         // configuration for the task
         const request = {
             parent: this.TasksClient.queuePath(this.projectId, config.location, config.queue),
@@ -43,8 +44,8 @@ module.exports = class TasksClient {
                 },
             },
         };
-        if(method === 'POST' || method === 'PUT'){
-            request.task.httpRequest.body = Buffer.from(JSON.stringify(body)).toString('base64');
+        if(config.method === 'POST' || config.method === 'PUT'){
+            request.task.httpRequest.body = Buffer.from(JSON.stringify(config.body)).toString('base64');
         }
 
         let createdTask = await this.TasksClient.createTask(request);
