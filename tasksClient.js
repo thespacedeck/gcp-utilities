@@ -16,7 +16,7 @@ module.exports = class TasksClient {
         this.keyPath = config.keyPath;
         this.location = config.serviceName ? config.serviceName : 'europe-west1';
 
-        this.CloudTasksClient = new CloudTasksClient({
+        this.TasksClient = new CloudTasksClient({
             projectId: this.projectId,
             keyFilename: this.keyPath
         });
@@ -31,10 +31,10 @@ module.exports = class TasksClient {
      * @param queue hosted queue location
      *
      */
-    sendTask(method, url, body, queue) {
+    async sendTask(method, url, body, queue) {
         // configuration for the task
         const request = {
-            parent: this.CloudTasksClient.queuePath(this.projectId, this.location, queue),
+            parent: this.TasksClient.queuePath(this.projectId, this.location, queue),
             task: {
                 httpRequest: {
                     httpMethod: method,
@@ -46,10 +46,10 @@ module.exports = class TasksClient {
             },
         };
         if(method === 'POST' || method === 'PUT'){
-            request.httpRequest.body = Buffer.from(JSON.stringify(body)).toString('base64');
+            request.task.httpRequest.body = Buffer.from(JSON.stringify(body)).toString('base64');
         }
 
-        let createdTask = this.cloudTasksClient.createTask(request);
+        let createdTask = await this.TasksClient.createTask(request);
 
         return createdTask;
     }
