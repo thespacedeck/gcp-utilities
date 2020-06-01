@@ -7,14 +7,12 @@ module.exports = class TasksClient {
      *
      * @param projectId Google projectId
      * @param keyPath path to service account json
-     * @param location hosted queue location
      * 
      * Constructs the actual Google cloud tasks client for internal use
      */
     constructor(config) {
         this.projectId = config.projectId;
         this.keyPath = config.keyPath;
-        this.location = config.serviceName ? config.serviceName : 'europe-west1';
 
         this.TasksClient = new CloudTasksClient({
             projectId: this.projectId,
@@ -31,14 +29,14 @@ module.exports = class TasksClient {
      * @param queue hosted queue location
      *
      */
-    async sendTask(method, url, body, queue) {
+    async sendTask(config) {
         // configuration for the task
         const request = {
-            parent: this.TasksClient.queuePath(this.projectId, this.location, queue),
+            parent: this.TasksClient.queuePath(this.projectId, config.location, config.queue),
             task: {
                 httpRequest: {
-                    httpMethod: method,
-                    url: url,
+                    httpMethod: config.method,
+                    url: config.url,
                     headers: {
                     'Content-Type': 'application/json',
                     },

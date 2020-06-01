@@ -259,7 +259,13 @@ const payload = {
     property: 'property-value'
 }
 
-cloudTasksClient.sendTask('POST', `URL`, payload, 'queue-name')
+cloudTasksClient.sendTask({
+    method: 'POST', 
+    url: `URL`, 
+    body: payload, 
+    queue: 'queue-name', 
+    location: 'us-central1'
+})
 ```
 
 ## Internal management
