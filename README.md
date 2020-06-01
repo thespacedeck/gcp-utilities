@@ -204,12 +204,10 @@ setTimeout(function(){
 }, 3000);
 ```
 
-## Examples
-
 ### Centralised Error Handling
 In order to gain the TypeScript typings (for intellisense / autocomplete) while using CommonJS imports with `require()` use the following approach:
 
-## When used as middleware:
+#### When used as middleware:
 ```js
 const { ErrorMiddleware } = require('tt-cloud-utilities')
 const apiName = require('./package.json').name;
@@ -230,7 +228,7 @@ app.use('/places', catchAsync(async (req, res, next) => {
 });
 ```
 
-## When used manually:
+#### When used manually:
 ```js
 const { AppError } = require('tt-cloud-utilities')
 app.all('*', (req, res, next) => {
@@ -241,6 +239,27 @@ app.all('*', (req, res, next) => {
         )
     );
 });
+```
+
+### Google Cloud Tasks
+In order to gain the TypeScript typings (for intellisense / autocomplete) while using CommonJS imports with `require()` use the following approach:
+
+#### Setup TasksClient and send with a one-liner:
+```js
+const { TasksClient } = require('tt-cloud-utilities');
+ 
+// Cloud Task Client
+const cloudTasksClient = new TasksClient({
+    projectId: 'YOUR-GOOGLE-PROJECT-ID',
+    keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON'
+});
+
+// content of the task
+const payload = {
+    property: 'property-value'
+}
+
+cloudTasksClient.sendTask('POST', `URL`, payload, 'queue-name')
 ```
 
 ## Internal management
