@@ -30,7 +30,6 @@ module.exports = class TasksClient {
      *
      */
     async sendTask(config) {
-        console.log(config)
         // configuration for the task
         const request = {
             parent: this.TasksClient.queuePath(this.projectId, config.location, config.queue),
