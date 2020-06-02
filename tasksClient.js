@@ -27,6 +27,7 @@ module.exports = class TasksClient {
      * @param url path to service account json
      * @param body hosted queue location
      * @param queue hosted queue location
+     * @param traceparent provide the traceparent ID for request to be propagated
      *
      */
     async sendTask(config) {
@@ -39,6 +40,7 @@ module.exports = class TasksClient {
                         url: config.url,
                         headers: {
                             'Content-Type': 'application/json',
+                            'traceparent': config.traceparent ? config.traceparent : null
                     },
                 },
             },

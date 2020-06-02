@@ -265,6 +265,7 @@ cloudTasksClient.sendTask({
     body: payload, 
     queue: 'my-queue', 
     location: 'europe-west1'
+    traceparent: '<CURRENT TRACE PARENT ID>'
 })
 ```
 
