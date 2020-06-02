@@ -35,10 +35,10 @@ module.exports = class TasksClient {
             parent: this.TasksClient.queuePath(this.projectId, config.location, config.queue),
             task: {
                 httpRequest: {
-                    httpMethod: config.method,
-                    url: config.url,
-                    headers: {
-                    'Content-Type': 'application/json',
+                        httpMethod: config.method,
+                        url: config.url,
+                        headers: {
+                            'Content-Type': 'application/json',
                     },
                 },
             },

@@ -33,7 +33,7 @@ let tracerInstance = new Tracer({
     plugins: {
         http: true, // boolean: to include in constructor of NodeTracerProvider
         https: true,
-        axios: false
+        express: false
     }
 });
 
@@ -250,8 +250,8 @@ const { TasksClient } = require('tt-cloud-utilities');
  
 // CLOOUDTASK CLIENT
 const cloudTasksClient = new TasksClient({
-    projectId: 'tt-hotel-api',
-    keyPath: './tt-hotel-api-defualt-service.json',
+    projectId: 'YOUR-GOOGLE-PROJECT-ID',
+    keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON',
 });
 
 // content of the task
@@ -266,6 +266,78 @@ cloudTasksClient.sendTask({
     queue: 'my-queue', 
     location: 'europe-west1'
 })
+```
+
+### TT Workflow Manager
+In order to gain the TypeScript typings (for intellisense / autocomplete) while using CommonJS imports with `require()` use the following approach:
+
+#### Setup TasksClient and send with a one-liner:
+```js
+const { TasksClient, Workflow } = require('tt-cloud-utilities');
+ 
+let tracer = new Tracer({
+    projectId: 'YOUR-GOOGLE-PROJECT-ID',
+    keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON',
+    plugins: {
+        http: true, // boolean: to include in constructor of NodeTracerProvider
+        https: true,
+        express: false
+    }
+}).createTracer()
+
+var express = require("express");
+var app = express();
+
+app.post("/", async function(req, res, next) {
+
+    const workflow = new Workflow({
+        projectId: 'YOUR-GOOGLE-PROJECT-ID',
+        keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON',
+    })
+    
+    // content of the task
+    const payload = {
+        prop: 'test-from-repo'
+    }
+    
+    workflow.kickChampion([
+        {
+    
+            service: 'http://example.com',
+            trace: {
+                name: 'GET call 1',
+            },
+            operation: {
+                method: 'GET', 
+                body: payload, // in case of POST
+                queue: 'tt-hotel-api', 
+                location: 'europe-west1'
+            }
+        },
+        {
+            service: 'http://example.com',        
+            trace: {
+                name: 'GET call 2'
+            },
+            operation: {
+                method: 'GET', 
+                body: payload, // in case of POST
+                queue: 'tt-hotel-api', 
+                location: 'europe-west1'
+            }
+        }
+    ])
+
+    res.send("done");
+
+    setInterval(function(){ 
+        console.log(workflow.getWorkflowQueue())
+    }, 5000);
+});
+
+var listener = app.listen(8080, function() {
+  console.log("Listening on port " + listener.address().port);
+});
 ```
 
 ## Internal management
