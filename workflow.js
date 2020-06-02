@@ -42,7 +42,6 @@ module.exports = class Workflow {
             }
             
             if(task.hasOwnProperty('trace')){
-                console.log('w/span')
                 const span = this.context.startSpan(task.trace.name, {
                     parent: this.context.getCurrentSpan()
                 });
@@ -55,7 +54,6 @@ module.exports = class Workflow {
                     span.end();
                 });
             }else{
-                console.log('wo/span')
                 await this.cloudTasksClient.sendTask(taskConfig)
             }
         
