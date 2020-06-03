@@ -33,7 +33,8 @@ let tracerInstance = new Tracer({
     plugins: {
         http: true, // boolean: to include in constructor of NodeTracerProvider
         https: true,
-        express: false
+        express: false,
+        mysql: false
     }
 });
 

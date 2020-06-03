@@ -13,10 +13,6 @@ module.exports = class Tracer {
     /**
      * Register this tracer for use with the OpenTelemetry API.
      * Undefined values may be replaced with defaults
-     *
-     * @param projectId Google projectId
-     * @param keyPath path to service account json
-     * @param otPlugins object of Open Telementry plugins to be activated
      */
     createTracer() {
 
@@ -34,7 +30,11 @@ module.exports = class Tracer {
                 express: {
                     enabled: this.plugins.express === true ? true : false,
                     path: "@opentelemetry/plugin-express"
-                }
+                },
+                mysql: {
+                    enabled: this.plugins.mysql === true ? true : false,
+                    path: "@opentelemetry/plugin-mysql"
+                },
             }
         });
 
