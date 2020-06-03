@@ -1,6 +1,6 @@
 {
   "name": "tt-cloud-utilities",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "nodejs project utilities for gcp",
   "main": "index.js",
   "scripts": {
