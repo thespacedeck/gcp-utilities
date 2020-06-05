@@ -57,6 +57,11 @@ function clientDemoRequest() {
     });
 
     tracer.withSpan(span, async () => {
+        span.setAttribute('prop', 'value');
+        span.setAttributes({
+            prop1: 'value',
+            prop2: 'value'
+        });
         span.addEvent('sending request');
         await axios.get("request/url")
         .then(results => {
