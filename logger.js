@@ -29,15 +29,23 @@ module.exports = class Logger {
             projectId: this.projectId,
             keyFilename: this.keyPath,
         });
+
+        let streamsObj = [
+            // And log to Stackdriver Logging, logging at 'info' and above
+            loggingBunyan.stream(logLevel ? logLevel : 'info'),
+        ]
+
+        if(process.env.NODE_ENV !== "production"){
+            streamsObj.push(
+                // Log to the console at 'info' and above
+                {stream: process.stdout, level: logLevel ? logLevel : 'info'}
+            )
+        }
+
         // Create a Bunyan logger that streams to Stackdriver Logging
         const logger = bunyan.createLogger({
             name: this.serviceName,
-            streams: [
-                // Log to the console at 'info' and above
-                process.env.NODE_ENV === "production" ? {stream: process.stdout, level: logLevel ? logLevel : 'info'} : null,
-                // And log to Stackdriver Logging, logging at 'info' and above
-                loggingBunyan.stream(logLevel ? logLevel : 'info'),
-            ],
+            streams: streamsObj
         });
 
         return logger;
