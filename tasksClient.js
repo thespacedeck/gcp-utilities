@@ -31,17 +31,24 @@ module.exports = class TasksClient {
      *
      */
     async sendTask(config) {
+        if(config.hasOwnProperty('headers')){
+            config.headers['Content-Type'] = 'application/json';
+            config.headers['traceparent'] = config.traceparent ? config.traceparent : null;
+        }else{
+            config.headers = {
+                'Content-Type': 'application/json',
+                'traceparent': config.traceparent ? config.traceparent : null,
+            }
+        }
+
         // configuration for the task
         const request = {
             parent: this.TasksClient.queuePath(this.projectId, config.location, config.queue),
             task: {
                 httpRequest: {
-                        httpMethod: config.method,
-                        url: config.url,
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'traceparent': config.traceparent ? config.traceparent : null
-                    },
+                    httpMethod: config.method,
+                    url: config.url,
+                    headers: config.headers,
                 },
             },
         };
