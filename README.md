@@ -256,6 +256,7 @@ const { TasksClient } = require('tt-cloud-utilities');
  
 // CLOOUDTASK CLIENT
 const cloudTasksClient = new TasksClient({
+    context: tracer,
     projectId: 'YOUR-GOOGLE-PROJECT-ID',
     keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON',
 });
@@ -271,7 +272,7 @@ cloudTasksClient.sendTask({
     body: payload, 
     queue: 'my-queue', 
     location: 'europe-west1'
-    traceparent: '<CURRENT TRACE PARENT ID>',
+    spanName: 'custom span name',
     headers: {
         key: 'value'
     }
@@ -301,6 +302,7 @@ var app = express();
 app.post("/", async function(req, res, next) {
 
     const workflow = new Workflow({
+        context: tracer,
         projectId: 'YOUR-GOOGLE-PROJECT-ID',
         keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON',
     })
@@ -314,9 +316,7 @@ app.post("/", async function(req, res, next) {
         {
     
             service: 'http://example.com',
-            trace: {
-                name: 'GET call 1',
-            },
+            spanName: 'GET call 1',
             operation: {
                 method: 'GET', 
                 body: payload, // in case of POST
@@ -325,10 +325,8 @@ app.post("/", async function(req, res, next) {
             }
         },
         {
-            service: 'http://example.com',        
-            trace: {
-                name: 'GET call 2'
-            },
+            service: 'http://example.com',  
+            spanName: 'GET call 1',
             operation: {
                 method: 'GET', 
                 body: payload, // in case of POST

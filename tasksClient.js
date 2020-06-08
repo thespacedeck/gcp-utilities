@@ -7,12 +7,16 @@ module.exports = class TasksClient {
      *
      * @param projectId Google projectId
      * @param keyPath path to service account json
+     * @param context trace
      * 
      * Constructs the actual Google cloud tasks client for internal use
      */
     constructor(config) {
         this.projectId = config.projectId;
         this.keyPath = config.keyPath;
+
+        // TRACER CLIENT
+        this.context = config.context;
 
         this.TasksClient = new CloudTasksClient({
             projectId: this.projectId,
@@ -27,10 +31,20 @@ module.exports = class TasksClient {
      * @param url path to service account json
      * @param body hosted queue location
      * @param queue hosted queue location
-     * @param traceparent provide the traceparent ID for request to be propagated
      *
      */
     async sendTask(config) {
+
+        let span;
+        if(config.spanName !== null){
+            span = this.context.startSpan(config.spanName, {
+                parent: this.context.getCurrentSpan()
+            });
+
+            // creat trace parent
+            config.traceparent = '00-' + span.spanContext.traceId + '-' + span.spanContext.spanId + '-0' + span.spanContext.traceFlags
+        }
+
         if(config.hasOwnProperty('headers')){
             config.headers['Content-Type'] = 'application/json';
             config.headers['traceparent'] = config.traceparent ? config.traceparent : null;
@@ -57,6 +71,10 @@ module.exports = class TasksClient {
         }
 
         let createdTask = await this.TasksClient.createTask(request);
+
+        if(config.spanName !== null){
+            span.end()
+        }
 
         return createdTask;
     }

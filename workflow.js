@@ -7,7 +7,6 @@ module.exports = class Workflow {
      * @param context trace
      */
     constructor(config) {
-        this.context = config.context;
         this.currentWorkflow = [];
 
         // TRACER CLIENT
@@ -15,6 +14,7 @@ module.exports = class Workflow {
 
         // CLOOUDTASK CLIENT
         this.cloudTasksClient = new TasksClient({
+            context: this.context,
             projectId: config.projectId,
             keyPath: config.keyPath,
         });
@@ -38,24 +38,11 @@ module.exports = class Workflow {
                 url: task.service, 
                 body: task.operation.body, 
                 queue: task.operation.queue, 
-                location: task.operation.location
+                location: task.operation.location,
+                spanName: task.spanName ? task.spanName : null
             }
             
-            if(task.hasOwnProperty('trace')){
-                const span = this.context.startSpan(task.trace.name, {
-                    parent: this.context.getCurrentSpan()
-                });
-                this.context.withSpan(span, async () => {
-                    span.setAttribute('serviceRequest: ', task.service);
-                    taskConfig.traceparent = '00-' + span.spanContext.traceId + '-' + span.spanContext.spanId + '-0' + span.spanContext.traceFlags
-                    await this.cloudTasksClient.sendTask(taskConfig)
-                    setTimeout(() => {
-                    }, 2000);
-                    span.end();
-                });
-            }else{
-                await this.cloudTasksClient.sendTask(taskConfig)
-            }
+            await this.cloudTasksClient.sendTask(taskConfig)
         
             this.currentWorkflow[i].status = 'executed';
 
