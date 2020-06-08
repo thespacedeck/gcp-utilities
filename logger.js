@@ -23,7 +23,7 @@ module.exports = class Logger {
      * Register this logger for use with Google Stackdriver.
      * Undefined values may be replaced with defaults
      */
-    createLogger() {
+    createLogger(logLevel) {
         // Creates a Bunyan Stackdriver Logging client
         const loggingBunyan = new LoggingBunyan({
             projectId: this.projectId,
@@ -34,7 +34,7 @@ module.exports = class Logger {
             name: this.serviceName,
             streams: [
                 // Log to the console at 'info' and above
-                {stream: process.stdout, level: 'info'},
+                {stream: process.stdout, level: logLevel ? logLevel : 'info'},
                 // And log to Stackdriver Logging, logging at 'info' and above
                 loggingBunyan.stream('info'),
             ],

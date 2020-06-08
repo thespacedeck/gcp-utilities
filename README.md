@@ -100,7 +100,7 @@ let loggerInstance = new Logger({
     projectVersion: '1.0.8'
 });
  
-let logger = loggerInstance.createLogger();
+let logger = loggerInstance.createLogger(logLevel); // look at https://www.npmjs.com/package/bunyan#levels for log levels
 let reporter = loggerInstance.createReporter();
  
 logger.error(error); // submits error to Stackdriver
