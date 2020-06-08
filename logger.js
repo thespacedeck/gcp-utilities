@@ -34,9 +34,9 @@ module.exports = class Logger {
             name: this.serviceName,
             streams: [
                 // Log to the console at 'info' and above
-                {stream: process.stdout, level: logLevel ? logLevel : 'info'},
+                process.env.NODE_ENV === "production" ? {stream: process.stdout, level: logLevel ? logLevel : 'info'} : null,
                 // And log to Stackdriver Logging, logging at 'info' and above
-                loggingBunyan.stream('info'),
+                loggingBunyan.stream(logLevel ? logLevel : 'info'),
             ],
         });
 
