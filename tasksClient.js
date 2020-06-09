@@ -41,6 +41,8 @@ module.exports = class TasksClient {
                 parent: this.context.getCurrentSpan()
             });
 
+            span.setAttributes(config)
+
             // creat trace parent
             config.traceparent = '00-' + span.spanContext.traceId + '-' + span.spanContext.spanId + '-0' + span.spanContext.traceFlags
         }

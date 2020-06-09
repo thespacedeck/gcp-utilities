@@ -272,7 +272,7 @@ cloudTasksClient.sendTask({
     body: payload, 
     queue: 'my-queue', 
     location: 'europe-west1'
-    spanName: 'custom span name',
+    spanName: 'custom span name', // specify if you want to execute underneath its own span
     headers: {
         key: 'value'
     }
@@ -302,7 +302,7 @@ var app = express();
 app.post("/", async function(req, res, next) {
 
     const workflow = new Workflow({
-        context: tracer,
+        context: tracer, // tracer will be passed on to CloudTask construction
         projectId: 'YOUR-GOOGLE-PROJECT-ID',
         keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON',
     })
@@ -316,7 +316,7 @@ app.post("/", async function(req, res, next) {
         {
     
             service: 'http://example.com',
-            spanName: 'GET call 1',
+            spanName: 'GET call 1', // specify if you want to execute underneath its own span
             operation: {
                 method: 'GET', 
                 body: payload, // in case of POST
@@ -326,7 +326,7 @@ app.post("/", async function(req, res, next) {
         },
         {
             service: 'http://example.com',  
-            spanName: 'GET call 1',
+            spanName: 'GET call 2', // specify if you want to execute underneath its own span
             operation: {
                 method: 'GET', 
                 body: payload, // in case of POST
