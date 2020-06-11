@@ -23,7 +23,7 @@ module.exports = class Logger {
      * Register this logger for use with Google Stackdriver.
      * Undefined values may be replaced with defaults
      */
-    createLogger(logLevel) {
+    createLogger(constructorOptions) {
         // Creates a Bunyan Stackdriver Logging client
         const loggingBunyan = new LoggingBunyan({
             projectId: this.projectId,
@@ -42,11 +42,16 @@ module.exports = class Logger {
             )
         }
 
+        let constructor = {
+            ...{ 
+                name: this.serviceName,
+                streams: streamsObj
+            }, 
+            ...constructorOptions
+        }
+
         // Create a Bunyan logger that streams to Stackdriver Logging
-        const logger = bunyan.createLogger({
-            name: this.serviceName,
-            streams: streamsObj
-        });
+        const logger = bunyan.createLogger(constructor);
 
         return logger;
     }
@@ -74,9 +79,13 @@ module.exports = class Logger {
     /**
      * Returns the trace key provided by bunyan to provide the log in Google Cloud Trace
      */
-    async getTraceKey(traceId) {
+    async getLoggerKey(traceId, logEntryOptions) {
+
         return {
-            [LOGGING_TRACE_KEY]: `projects/${this.projectId}/traces/${traceId}`
+            ...{
+                [LOGGING_TRACE_KEY]: `projects/${this.projectId}/traces/${traceId}`
+            },
+            ...logEntryOptions
         };
     }
   
