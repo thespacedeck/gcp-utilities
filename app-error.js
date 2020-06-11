@@ -14,8 +14,8 @@ class ErrorMiddleware {
     errorResponse(err, req, res, next) {
         err.statusCode = err.statusCode || 500;
         err.status = err.status || 'error';
-    
-        res.status(err.statusCode).json({
+
+        let responseError = {
             troopTravel: [
                 { 
                     api: this.apiName, 
@@ -29,7 +29,11 @@ class ErrorMiddleware {
                     }
                 }
             ]
-        });
+        }
+
+        console.error(responseError)
+    
+        res.status(err.statusCode).json(responseError);
     }
 
 }
