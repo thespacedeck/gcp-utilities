@@ -31,7 +31,7 @@ class ErrorMiddleware {
             ]
         }
 
-        console.error(responseError)
+        console.error(JSON.stringify(responseError))
     
         res.status(err.statusCode).json(responseError);
     }
