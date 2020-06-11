@@ -32,13 +32,13 @@ module.exports = class Logger {
 
         let streamsObj = [
             // And log to Stackdriver Logging, logging at 'info' and above
-            loggingBunyan.stream(logLevel ? logLevel : 'info'),
+            loggingBunyan.stream(constructorOptions.level ? constructorOptions.level : 'info'),
         ]
 
         if(process.env.NODE_ENV !== "production"){
             streamsObj.push(
                 // Log to the console at 'info' and above
-                {stream: process.stdout, level: logLevel ? logLevel : 'info'}
+                {stream: process.stdout, level: constructorOptions.level ? constructorOptions.level : 'info'}
             )
         }
 
