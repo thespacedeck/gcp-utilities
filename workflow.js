@@ -12,9 +12,15 @@ module.exports = class Workflow {
         // TRACER CLIENT
         this.context = config.context;
 
+        // LOGGER CLIENT
+        if(config.hasOwnProperty('loggerInstance')){
+            this.loggerInstance = config.loggerInstance
+        }
+
         // CLOOUDTASK CLIENT
         this.cloudTasksClient = new TasksClient({
             context: this.context,
+            loggerInstance: this.loggerInstance ? this.loggerInstance : undefined,
             projectId: config.projectId,
             keyPath: config.keyPath,
         });

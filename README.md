@@ -99,16 +99,29 @@ let loggerInstance = new Logger({
     serviceName: 'default',
     projectVersion: '1.0.8'
 });
+
+const constructorOptions = {
+    level: "info",
+    // add more option according to API reference
+}
  
-let logger = loggerInstance.createLogger(logLevel); // look at https://www.npmjs.com/package/bunyan#levels for log levels
+let logger = loggerInstance.createLogger(constructorOptions); // look at https://www.npmjs.com/package/bunyan#levels for log levels
 let reporter = loggerInstance.createReporter();
  
 logger.error(error); // submits error to Stackdriver
 reporter.report(error); // reports error to Error Reporting
 logger.error(new Error(error)); // submits error to both Stackdriver and Error Reporting
 
+let labelObject = {
+    key: key,
+    clientId: clientId,
+    tripId: tripId,
+    originId: originId,
+    destinationId: destinationId
+};
+
 // If you wish to view log entries inline with trace spans in the Stackdriver Trace Viewer. This means log entry shows in Cloud Logging, Error Reporting and Cloud Trace
-logger.error(await loggerInstance.getTraceKey(tracer.getCurrentSpan().spanContext.traceId), new Error("Error now logged inline with trace span"));  
+logger.error(await loggerInstance.getLoggerKey(tracer.getCurrentSpan().spanContext.traceId, labelObject), new Error("Error now logged inline with trace span"));  
 ```
 
 ### MySQL Client for Google Cloud SQL
@@ -256,7 +269,8 @@ const { TasksClient } = require('tt-cloud-utilities');
  
 // CLOOUDTASK CLIENT
 const cloudTasksClient = new TasksClient({
-    context: tracer,
+    context: tracer, // if needed
+    loggerInstance: loggerInstance // if needed
     projectId: 'YOUR-GOOGLE-PROJECT-ID',
     keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON',
 });
@@ -302,7 +316,8 @@ var app = express();
 app.post("/", async function(req, res, next) {
 
     const workflow = new Workflow({
-        context: tracer, // tracer will be passed on to CloudTask construction
+        context: tracer, // tracer will be passed on to CloudTask construction (if needed)
+        loggerInstance: loggerInstance // if needed
         projectId: 'YOUR-GOOGLE-PROJECT-ID',
         keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON',
     })

@@ -22,6 +22,12 @@ module.exports = class TasksClient {
             projectId: this.projectId,
             keyFilename: this.keyPath
         });
+
+        // LOGGER CLIENT
+        if(config.hasOwnProperty('loggerInstance') && config.loggerInstance !== undefined){
+            this.loggerInstance = config.loggerInstance
+            this.logger = config.loggerInstance.createLogger({level: process.env.LOGLEVEL ? process.env.LOGLEVEL : 'trace'});
+        }
     }
 
     /**
@@ -37,9 +43,24 @@ module.exports = class TasksClient {
 
         let span;
         if(config.spanName !== null){
+
             span = this.context.startSpan(config.spanName, {
                 parent: this.context.getCurrentSpan()
             });
+
+            if(this.logger){
+                let labelObject = {
+                    traceId: this.context.getCurrentSpan().spanContext.traceId,
+                    spanId: this.context.getCurrentSpan().spanContext.spanId,
+                    parentSpanId: this.context.getCurrentSpan().parentSpanId ? this.context.getCurrentSpan().parentSpanId : "xxxxxxxxxxxxxxxx"
+                };
+
+                let loggerKey = await this.loggerInstance.getLoggerKey(this.context.getCurrentSpan().spanContext.traceId, {
+                    labels: labelObject
+                });
+                
+                this.logger.warn(loggerKey, `${this.context.getCurrentSpan().parentSpanId ? this.context.getCurrentSpan().parentSpanId : "XXXXXXXXXXXXXXXX"}:${this.context.getCurrentSpan().spanContext.spanId}`);
+            }
 
             span.setAttributes(config)
 
