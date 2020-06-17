@@ -50,9 +50,11 @@ module.exports = class TasksClient {
 
             if(this.logger){
                 let labelObject = {
+                    functionName: `taskClient.sendTask()`,
                     traceId: this.context.getCurrentSpan().spanContext.traceId,
-                    spanId: this.context.getCurrentSpan().spanContext.spanId,
-                    parentSpanId: this.context.getCurrentSpan().parentSpanId ? this.context.getCurrentSpan().parentSpanId : "xxxxxxxxxxxxxxxx"
+                    spanId: span.spanContext.spanId,
+                    spanTraceId: span.spanContext.traceId,
+                    parentSpanId: span.spanContext.parentSpanId ? span.spanContext.parentSpanId : "xxxxxxxxxxxxxxxx"
                 };
 
                 let loggerKey = await this.loggerInstance.getLoggerKey(this.context.getCurrentSpan().spanContext.traceId, {
