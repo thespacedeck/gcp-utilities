@@ -45,7 +45,8 @@ module.exports = class Workflow {
                 body: task.operation.body, 
                 queue: task.operation.queue, 
                 location: task.operation.location,
-                spanName: task.spanName ? task.spanName : null
+                spanName: task.spanName ? task.spanName : null,
+                scheduleTime: task.operation.scheduleTime ? task.operation.scheduleTime : null
             }
             
             await this.cloudTasksClient.sendTask(taskConfig)

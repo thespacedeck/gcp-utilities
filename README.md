@@ -280,6 +280,8 @@ const payload = {
     prop: 'test-from-repo'
 }
 
+const time_in_seconds_from_now = (new Date().getTime() / 1000) + 300 // 5 minutes from now
+
 cloudTasksClient.sendTask({
     method: 'POST', 
     url: `https://url.com`, 
@@ -289,7 +291,8 @@ cloudTasksClient.sendTask({
     spanName: 'custom span name', // specify if you want to execute underneath its own span
     headers: {
         key: 'value'
-    }
+    },
+    scheduleTime: time_in_seconds_from_now // specify if you want to schedule the task in the future (must be in seconds)
 })
 ```
 
@@ -326,6 +329,8 @@ app.post("/", async function(req, res, next) {
     const payload = {
         prop: 'test-from-repo'
     }
+
+    const time_in_seconds_from_now = (new Date().getTime() / 1000) + 300 // 5 minutes from now
     
     workflow.kickChampion([
         {
@@ -336,7 +341,8 @@ app.post("/", async function(req, res, next) {
                 method: 'GET', 
                 body: payload, // in case of POST
                 queue: 'tt-hotel-api', 
-                location: 'europe-west1'
+                location: 'europe-west1',
+                scheduleTime: time_in_seconds_from_now // specify if you want to schedule the task in the future (must be in seconds)
             }
         },
         {

@@ -41,6 +41,7 @@ module.exports = class TasksClient {
      */
     async sendTask(config) {
 
+        // determin
         let span;
         if(config.spanName !== null){
 
@@ -70,6 +71,7 @@ module.exports = class TasksClient {
             config.traceparent = '00-' + span.spanContext.traceId + '-' + span.spanContext.spanId + '-0' + span.spanContext.traceFlags
         }
 
+        // set headers on task
         if(config.hasOwnProperty('headers')){
             config.headers['Content-Type'] = 'application/json';
             config.headers['traceparent'] = config.traceparent ? config.traceparent : null;
@@ -89,6 +91,9 @@ module.exports = class TasksClient {
                     url: config.url,
                     headers: config.headers,
                 },
+                scheduleTime = {
+                    seconds: config.scheduleTime ? config.scheduleTime + (new Date().getTime() / 1000) : new Date().getTime() / 1000,
+                }
             },
         };
         if(config.method === 'POST' || config.method === 'PUT'){
