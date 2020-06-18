@@ -15,3 +15,8 @@ steps:
   args: ['install']
 - name: 'gcr.io/cloud-builders/npm'
   args: ['publish']
+  env:
+  - HOME=/root/
+  volumes:
+  - name: 'home'
+    path: /root/
