@@ -92,9 +92,9 @@ module.exports = class TasksClient {
                     headers: config.headers,
                 },
                 scheduleTime = {
-                    seconds: config.scheduleTime ? config.scheduleTime + (new Date().getTime() / 1000) : new Date().getTime() / 1000,
+                    seconds: config.scheduleTime ? config.scheduleTime + (Math.round(new Date() / 1000)) : Math.round(new Date() / 1000),
                 }
-            },
+            }
         };
         if(config.method === 'POST' || config.method === 'PUT'){
             request.task.httpRequest.body = Buffer.from(JSON.stringify(config.body)).toString('base64');

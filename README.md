@@ -280,7 +280,7 @@ const payload = {
     prop: 'test-from-repo'
 }
 
-const time_in_seconds_from_now = (new Date().getTime() / 1000) + 300 // 5 minutes from now
+const time_in_seconds_from_now = (Math.round(new Date() / 1000)) + 300 // 5 minutes from now
 
 cloudTasksClient.sendTask({
     method: 'POST', 
@@ -330,7 +330,7 @@ app.post("/", async function(req, res, next) {
         prop: 'test-from-repo'
     }
 
-    const time_in_seconds_from_now = (new Date().getTime() / 1000) + 300 // 5 minutes from now
+    const time_in_seconds_from_now = (Math.round(new Date() / 1000)) + 300 // 5 minutes from now
     
     workflow.kickChampion([
         {
