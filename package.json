@@ -1,7 +1,7 @@
 {
   "name": "tt-cloud-utilities",
   "version": "1.1.22",
-  "description": "nodejs project utilities for gcp",
+  "description": "nodejs project utilities for gcp1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
