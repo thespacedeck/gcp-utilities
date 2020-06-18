@@ -91,7 +91,7 @@ module.exports = class TasksClient {
                     url: config.url,
                     headers: config.headers,
                 },
-                scheduleTime = {
+                scheduleTime: {
                     seconds: config.scheduleTime ? config.scheduleTime + (Math.round(new Date() / 1000)) : Math.round(new Date() / 1000),
                 }
             }
