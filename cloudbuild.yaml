@@ -6,6 +6,6 @@ steps:
     - config
     - set
     - '//registry.npmjs.org/:_authToken'
-    - '290c466b-78da-43ad-9be3-9d064caabb86'
+    - '053a1f7d-3b79-46b6-aaa7-d4537c7c8565'
 - name: 'gcr.io/cloud-builders/npm'
   args: ['publish']
