@@ -2,6 +2,10 @@ steps:
 - name: 'gcr.io/cloud-builders/npm'
   args: ['install']
 - name: 'gcr.io/cloud-builders/npm'
-  args: ['config', 'set', '//registry.npmjs.org/:_authToken', '290c466b-78da-43ad-9be3-9d064caabb86']
+  args:
+    - config
+    - set
+    - '//registry.npmjs.org/:_authToken'
+    - '290c466b-78da-43ad-9be3-9d064caabb86'
 - name: 'gcr.io/cloud-builders/npm'
   args: ['publish']
