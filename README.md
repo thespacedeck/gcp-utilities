@@ -387,3 +387,8 @@ Push to this GSC repo
 - git push --all google // Push from your local Git repository
 - npm publish // publish/update to npm
 - npm unpublish // remove package from npm (there are some rules you need to adhere to...)
+
+Using cloud Build
+- git pull google cloudbuild
+- npm version patch
+- git push google master
