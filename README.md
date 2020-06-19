@@ -388,7 +388,15 @@ Push to this GSC repo
 - npm publish // publish/update to npm
 - npm unpublish // remove package from npm (there are some rules you need to adhere to...)
 
-Using cloud Build
-- git pull google cloudbuild
-- npm version patch
-- git push google master
+# Start a new feature
+git checkout -b new-feature master
+# Edit some files
+git add <file>
+git commit -m "Start a feature"
+# Edit some files
+git add <file>
+git commit -m "Finish a feature"
+# Merge in the new-feature branch
+git checkout master
+git merge new-feature
+git branch -d new-feature
