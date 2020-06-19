@@ -406,7 +406,13 @@ git checkout master
 git merge new-feature
 git branch -d new-feature
 
+- delete remote branch
+git push origin --delete test
+
 - push local master to remote master
 npm version patch
 git push --all goole
+
+- delete remote branch
+git push origin --delete test
 ```
