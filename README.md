@@ -388,7 +388,7 @@ Push to this GSC repo
 - npm publish // publish/update to npm
 - npm unpublish // remove package from npm (there are some rules you need to adhere to...)
 
-Workflow for local git repo and how to push to remote
+** Workflow for local git repo and how to push to remote **
 ```
 // checkout branch from local master
 git checkout -b new-feature master
