@@ -407,5 +407,6 @@ git merge new-feature
 git branch -d new-feature
 
 - push local master to remote master
+npm version patch
 git push --all goole
 ```
