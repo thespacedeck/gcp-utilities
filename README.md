@@ -388,15 +388,24 @@ Push to this GSC repo
 - npm publish // publish/update to npm
 - npm unpublish // remove package from npm (there are some rules you need to adhere to...)
 
-# Start a new feature
+Workflow for local git repo and how to push to remote
+```
+// checkout branch from local master
 git checkout -b new-feature master
-# Edit some files
+
+// Edit some files
 git add <file>
 git commit -m "Start a feature"
-# Edit some files
+
+// Edit some files
 git add <file>
 git commit -m "Finish a feature"
-# Merge in the new-feature branch
+
+- Merge in the new-feature branch
 git checkout master
 git merge new-feature
 git branch -d new-feature
+
+- push local master to remote master
+git push --all goole
+```
