@@ -411,8 +411,9 @@ git push origin --delete test
 
 - push local master to remote master
 npm version patch
-git push --all goole
+git push --all goole // push to master mbranch and build the new release
 
-- delete remote branch
-git push origin --delete test
+- remote branch management
+git checkout -b test // creates and checks out branch locally
+git push origin --delete test // push local branch to remote
 ```
