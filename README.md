@@ -381,7 +381,7 @@ let pubsub = new Tracer({
     keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON',
 }).init()
 
-pubsub
+pubsub 
     .topic(topicName).publish(dataBuffer)
     .then(messageId => {
         console.log(`Message ${messageId} published.`);
