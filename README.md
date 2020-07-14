@@ -369,6 +369,28 @@ var listener = app.listen(8080, function() {
 });
 ```
 
+### TT PubSub Client
+In order to gain the TypeScript typings (for intellisense / autocomplete) while using CommonJS imports with `require()` use the following approach:
+
+#### Setup PubSubClient:
+```js
+const { PubSubClient } = require('tt-cloud-utilities');
+ 
+let pubsub = new Tracer({
+    projectId: 'YOUR-GOOGLE-PROJECT-ID',
+    keyPath: 'PATH/TO/SERVICE-ACCOUNT.JSON',
+}).init()
+
+pubsub
+    .topic(topicName).publish(dataBuffer)
+    .then(messageId => {
+        console.log(`Message ${messageId} published.`);
+    })
+    .catch(err => {
+        console.error('ERROR:', err);
+    });
+```
+
 ## Internal management
 Provide your authentication credentials
 - gcloud init && git config --global credential.https://source.developers.google.com.helper gcloud.sh
