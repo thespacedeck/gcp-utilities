@@ -21,11 +21,13 @@ module.exports = class Tracer {
             plugins: {
                 http: {
                     enabled: this.plugins.http === true ? true : false,
-                    path: "@opentelemetry/plugin-http"
+                    path: "@opentelemetry/plugin-http",
+                    ignoreOutgoingUrls: [/spans/]
                 },
                 https: {
                     enabled: this.plugins.https === true ? true : false,
-                    path: "@opentelemetry/plugin-https"
+                    path: "@opentelemetry/plugin-https",
+                    ignoreOutgoingUrls: [/spans/]
                 },
                 express: {
                     enabled: this.plugins.express === true ? true : false,
