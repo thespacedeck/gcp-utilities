@@ -22,12 +22,12 @@ module.exports = class Tracer {
                 http: {
                     enabled: this.plugins.http === true ? true : false,
                     path: "@opentelemetry/plugin-http",
-                    ignoreOutgoingUrls: [/spans/]
+                    ignoreOutgoingUrls: [/traces:batchWrite/]
                 },
                 https: {
                     enabled: this.plugins.https === true ? true : false,
                     path: "@opentelemetry/plugin-https",
-                    ignoreOutgoingUrls: [/spans/]
+                    ignoreOutgoingUrls: [/traces:batchWrite/]
                 },
                 express: {
                     enabled: this.plugins.express === true ? true : false,
