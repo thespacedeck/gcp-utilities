@@ -17,7 +17,6 @@ module.exports = class Logger {
         this.keyPath = config.keyPath;
         this.serviceName = config.serviceName ? config.serviceName : 'defualt';
         this.projectVersion = config.projectVersion ? config.projectVersion : null;
-        this.traceId = null;
     }
     
     /**
@@ -76,10 +75,6 @@ module.exports = class Logger {
 
         return reportError;
     }
-
-    setTraceId(traceId){
-        this.traceId = traceId
-    }
  
     /**
      * Returns the trace key provided by bunyan to provide the log in Google Cloud Trace
@@ -88,7 +83,7 @@ module.exports = class Logger {
 
         return {
             ...{
-                [LOGGING_TRACE_KEY]: `projects/${this.projectId}/traces/${this.traceId}`
+                [LOGGING_TRACE_KEY]: `projects/${this.projectId}/traces/${traceId}`
             },
             ...logEntryOptions
         };
