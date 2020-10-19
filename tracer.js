@@ -37,6 +37,10 @@ module.exports = class Tracer {
                     enabled: this.plugins.mysql === true ? true : false,
                     path: "@opentelemetry/plugin-mysql"
                 },
+                grpc:{
+                    enabled: true,
+                    path: "@opentelemetry/plugin-grpc-js"
+                }
             }
         });
 
