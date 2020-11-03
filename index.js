@@ -5,6 +5,7 @@ const TasksClient = require('./tasksClient');
 const Workflow = require('./workflow');
 const PubSubClient = require('./pusubClient');
 const { ErrorMiddleware, AppError, catchAsync } = require('./app-error');
+const { AppResponse, responseObject } = require('./app-response');
 
 
 module.exports = {
@@ -15,6 +16,8 @@ module.exports = {
     ErrorMiddleware,
     AppError,
     catchAsync,
+    AppResponse,
+    responseObject,
     Workflow,
     PubSubClient
 };
