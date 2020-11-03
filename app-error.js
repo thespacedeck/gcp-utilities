@@ -15,20 +15,16 @@ class ErrorMiddleware {
         err.statusCode = err.statusCode || 500;
         err.status = err.status || 'error';
 
-        let responseError = {
-            troopTravel: [
-                { 
-                    api: this.apiName, 
-                    version: this.projectVersion,
-                    ERROR: {
-                        code: err.statusCode,
-                        trace: err.trace,
-                        status: err.status,
-                        message: err.message,
-                        stackTrace: err.stack.split('\n')
-                    }
-                }
-            ]
+        let responseError = { 
+            api: this.apiName, 
+            version: this.projectVersion,
+            result: {
+                statusCode: err.statusCode,
+                trace: err.trace,
+                status: err.status,
+                message: err.message,
+                stackTrace: err.stack.split('\n')
+            }
         }
 
         console.error(JSON.stringify(responseError))
