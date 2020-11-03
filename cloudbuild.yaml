@@ -19,4 +19,4 @@ steps:
   - HOME=/root/
   volumes:
   - name: 'home'
-    path: /root/
+    path: /root/ 
