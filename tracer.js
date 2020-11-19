@@ -40,6 +40,10 @@ module.exports = class Tracer {
                 '@grpc/grpc-js': {
                     enabled: true,
                     path: '@opentelemetry/plugin-grpc-js',
+                },
+                dns: {
+                    enabled: true,
+                    path: '@opentelemetry/plugin-dns',
                 }
             }
         });

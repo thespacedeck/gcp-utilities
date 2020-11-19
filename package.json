@@ -17,6 +17,7 @@
     "@google-cloud/tasks": "^2.1.2",
     "@opentelemetry/api": "^0.12.0",
     "@opentelemetry/node": "^0.12.0",
+    "@opentelemetry/plugin-dns": "^0.11.0",
     "@opentelemetry/plugin-express": "^0.11.0",
     "@opentelemetry/plugin-grpc": "^0.12.0",
     "@opentelemetry/plugin-grpc-js": "^0.12.0",
