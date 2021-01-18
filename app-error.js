@@ -6,9 +6,12 @@ class ErrorMiddleware {
      * @param apiName service name
      * @param projectVersion service version
      */
-    constructor(apiName, projectVersion) {
+    constructor(apiName, projectVersion, logger, tracer, loggerInstance) {
         this.apiName = apiName;
         this.projectVersion = projectVersion;
+        this.tracer = tracer
+        this.logger = logger
+        this.loggerInstance = loggerInstance
     }
 
     errorResponse(err, req, res, next) {
@@ -27,7 +30,20 @@ class ErrorMiddleware {
             }
         }
 
-        console.error(JSON.stringify(responseError))
+        // LOG ERROR WITH LOGGER
+        let labelObject = {
+            spanId: this.tracer.getCurrentSpan().spanContext.spanId
+          };
+          let loggerKey = this.loggerInstance.getLoggerKey(
+            this.tracer.getCurrentSpan().spanContext.traceId,
+            { labels: labelObject }
+          );
+          let span = this.tracer.getCurrentSpan();
+          span.setAttribute("ERROR", labelObject.spanId);
+          this.logger.error(
+            loggerKey,
+            responseError
+          );
     
         res.status(err.statusCode).json(responseError);
     }
