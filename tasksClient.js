@@ -62,7 +62,7 @@ module.exports = class TasksClient {
                     labels: labelObject
                 });
                 
-                this.logger.warn(loggerKey, `${this.context.getCurrentSpan().parentSpanId ? this.context.getCurrentSpan().parentSpanId : "XXXXXXXXXXXXXXXX"}:${this.context.getCurrentSpan().spanContext.spanId}`);
+                this.logger.debug(loggerKey, `${this.context.getCurrentSpan().parentSpanId ? this.context.getCurrentSpan().parentSpanId : "XXXXXXXXXXXXXXXX"}:${this.context.getCurrentSpan().spanContext.spanId}`);
             }
 
             span.setAttributes(config)
