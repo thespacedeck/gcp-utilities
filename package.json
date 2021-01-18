@@ -1,6 +1,6 @@
 {
   "name": "tt-cloud-utilities",
-  "version": "1.1.45",
+  "version": "1.1.46",
   "description": "nodejs project utilities for gcp",
   "main": "index.js",
   "scripts": {
@@ -26,6 +26,6 @@
     "@opentelemetry/plugin-mysql": "^0.11.0",
     "@opentelemetry/tracing": "^0.12.0",
     "bunyan": "^1.8.14",
-    "mysql": "^2.18.1" 
+    "mysql": "^2.18.1"
   }
 }
