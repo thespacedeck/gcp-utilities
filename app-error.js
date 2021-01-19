@@ -32,6 +32,7 @@ class ErrorMiddleware {
 
         // LOG ERROR WITH LOGGER
         let labelObject = {
+            environment: process.env.NODE_ENV,
             spanId: this.tracer.getCurrentSpan().spanContext.spanId
           };
           let loggerKey = this.loggerInstance.getLoggerKey(

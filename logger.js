@@ -35,12 +35,12 @@ module.exports = class Logger {
             loggingBunyan.stream(constructorOptions.level ? constructorOptions.level : 'info'),
         ]
 
-        if(process.env.NODE_ENV !== "production"){
-            streamsObj.push(
-                // Log to the console at 'info' and above
-                {stream: process.stdout, level: constructorOptions.level ? constructorOptions.level : 'info'}
-            )
-        }
+        // if(process.env.NODE_ENV !== "production"){
+        //     streamsObj.push(
+        //         // Log to the console at 'info' and above
+        //         {stream: process.stdout, level: constructorOptions.level ? constructorOptions.level : 'info'}
+        //     )
+        // }
 
         let constructor = {
             ...{ 
