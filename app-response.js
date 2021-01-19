@@ -2,7 +2,7 @@
 let responseObject = { 
     api: require('../../package.json').name, 
     version: require('../../package.json').version,
-    result: {
+    result: { 
         statusCode: null,
         data: null
     }
