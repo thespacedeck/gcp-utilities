@@ -3,3 +3,6 @@ node_modules
 
 # lock files
 package-lock.json
+
+# secrets files
+npmrc.enc
