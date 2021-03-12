@@ -1,7 +1,7 @@
 {
   "name": "gcp-cloud-utilities",
   "version": "1.2",
-  "description": "nodejs project utilities for gcp",
+  "description": "nodejs/express project utilities for gcp",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
