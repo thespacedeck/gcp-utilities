@@ -16,7 +16,7 @@ Using npm:
 $ npm install gcp-cloud-utilities
 
 #update
-$ npm i gcp-cloud-utilities@latest
+$ npm i gcp-cloud-utilities@latest 
 ```
 
 ## Examples
