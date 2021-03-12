@@ -26,7 +26,7 @@ module.exports = class MySql {
 
         connection = mysql.createConnection(this.connectionConfig);
 
-        connection.connect(function(err) {
+        connection.connect(function(err) { 
             if(err) {
                 console.log(err)
             } 
