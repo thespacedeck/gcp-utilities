@@ -31,21 +31,21 @@ class ErrorMiddleware {
         }
 
         // LOG ERROR WITH LOGGER
+        let span = this.tracer.getCurrentSpan() ? this.tracer.getCurrentSpan().spanContext.spanId : this.tracer.startSpan();
         let labelObject = {
             environment: process.env.NODE_ENV,
-            spanId: this.tracer.getCurrentSpan().spanContext.spanId
-          };
-          let loggerKey = this.loggerInstance.getLoggerKey(
-            this.tracer.getCurrentSpan().spanContext.traceId,
+            spanId: span.spanContext.spanId
+        };
+        let loggerKey = this.loggerInstance.getLoggerKey(
+            span.spanContext.spanId,
             { labels: labelObject }
-          );
-          let span = this.tracer.getCurrentSpan();
-          span.setAttribute("ERROR", labelObject.spanId);
-          this.logger.error(
-            loggerKey,
-            responseError
-          );
-    
+            );
+            span.setAttribute("ERROR", labelObject.spanId);
+            this.logger.error(
+                loggerKey,
+                responseError
+                );
+        
         res.status(err.statusCode).json(responseError);
     }
 
