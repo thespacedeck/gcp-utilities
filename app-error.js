@@ -31,7 +31,7 @@ class ErrorMiddleware {
         }
 
         // LOG ERROR WITH LOGGER
-        let span = this.tracer.getCurrentSpan() ? this.tracer.getCurrentSpan().spanContext.spanId : this.tracer.startSpan();
+        let span = this.tracer.getCurrentSpan ? this.tracer.getCurrentSpan.spanContext.spanId : this.tracer.startSpan();
         let labelObject = {
             environment: process.env.NODE_ENV,
             spanId: span.spanContext.spanId
