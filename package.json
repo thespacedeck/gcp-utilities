@@ -1,6 +1,6 @@
 {
   "name": "gcp-cloud-utilities",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "nodejs/express project utilities for gcp",
   "main": "index.js",
   "scripts": {
