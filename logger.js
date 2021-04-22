@@ -2,7 +2,7 @@ const bunyan = require('bunyan');
 const { LoggingBunyan, LOGGING_TRACE_KEY } = require('@google-cloud/logging-bunyan');
 const { ErrorReporting } = require('@google-cloud/error-reporting');
 
-module.exports = class Logger {
+class Logger {
     /**
      * Construct this logger for use with Google Stackdriver.
      * Undefined values may be replaced with defaults
@@ -42,12 +42,12 @@ module.exports = class Logger {
             loggingBunyan.stream(constructorOptions.level ? constructorOptions.level : 'info'),
         ]
 
-        if(process.env.NODE_ENV !== "production"){
-            streamsObj.push(
-                // Log to the console at 'info' and above
-                {stream: process.stdout, level: constructorOptions.level ? constructorOptions.level : 'info'}
-            )
-        }
+        // if(process.env.NODE_ENV !== "production"){
+        //     streamsObj.push(
+        //         // Log to the console at 'info' and above
+        //         {stream: process.stdout, level: constructorOptions.level ? constructorOptions.level : 'info'}
+        //     )
+        // }
 
         let constructor = {
             ...{ 
@@ -97,4 +97,37 @@ module.exports = class Logger {
         };
     }
   
+}
+
+class LoggerLabels {
+    /**
+     * Construct this logger for use with Google Stackdriver.
+     * Undefined values may be replaced with defaults
+     *
+     * @param environment Google projectId
+     * @param module path to service account json
+     * @param reqPath Google specified service name, if not defualt
+     * @param endpoint path to service account json
+     * @param function path to service account json
+     */
+    constructor(config) {
+        if(
+            !config.environment || 
+            !config.module || 
+            !config.reqPath || 
+            !config.endpoint || 
+            !config.function
+        ) console.error('Please provide all variables for constructor: environment, module, reqPath, endpoint, function')
+        this.environment = config.environment;
+        this.module = config.module;
+        this.reqPath = config.reqPath;
+        this.endpoint = config.endpoint;
+        this.function = config.function;
+    }
+  
+}
+
+module.exports = { 
+    Logger,
+    LoggerLabels
 }

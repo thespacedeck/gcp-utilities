@@ -1,4 +1,5 @@
 const { CloudTasksClient } = require("@google-cloud/tasks");
+const tracerApi = require("@opentelemetry/api");
 
 module.exports = class TasksClient {
     /**
@@ -46,23 +47,21 @@ module.exports = class TasksClient {
         if(config.spanName !== null){
 
             span = this.context.startSpan(config.spanName, {
-                parent: this.context.getCurrentSpan()
+                parent: tracerApi.getSpan(tracerApi.context.active()) ? tracerApi.getSpan(tracerApi.context.active()) : this.context.startSpan().updateName("sendTask")
             });
 
             if(this.logger){
                 let labelObject = {
                     function: `taskClient.sendTask()`,
-                    traceId: this.context.getCurrentSpan().spanContext.traceId,
                     spanId: span.spanContext.spanId,
-                    spanTraceId: span.spanContext.traceId,
-                    parentSpanId: span.parentSpanId ? span.parentSpanId : "xxxxxxxxxxxxxxxx"
+                    spanTraceId: span.spanContext.traceId
                 };
 
-                let loggerKey = await this.loggerInstance.getLoggerKey(this.context.getCurrentSpan().spanContext.traceId, {
+                let loggerKey = await this.loggerInstance.getLoggerKey(span.spanContext.spanId, {
                     labels: labelObject
                 });
                 
-                this.logger.debug(loggerKey, `${this.context.getCurrentSpan().parentSpanId ? this.context.getCurrentSpan().parentSpanId : "XXXXXXXXXXXXXXXX"}:${this.context.getCurrentSpan().spanContext.spanId}`);
+                this.logger.debug(loggerKey, `KICK CLOUD TASK: ${span.spanContext.spanId}`);
             }
 
             span.setAttributes(config)

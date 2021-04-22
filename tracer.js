@@ -1,6 +1,7 @@
 const opentelemetry = require("@opentelemetry/api");
+const { TraceExporter } = require('@google-cloud/opentelemetry-cloud-trace-exporter');
 const { NodeTracerProvider } = require("@opentelemetry/node");
-const { SimpleSpanProcessor } = require("@opentelemetry/tracing");
+const { BatchSpanProcessor } = require("@opentelemetry/tracing");
 
 module.exports = class Tracer {
     constructor(config) {
@@ -48,8 +49,11 @@ module.exports = class Tracer {
             }
         });
 
+        // Register the tracer
+        tracerProvider.register();
+        opentelemetry.trace.setGlobalTracerProvider(tracerProvider);
+
         // Create an exporter for sending spans data
-        const { TraceExporter } = require('@google-cloud/opentelemetry-cloud-trace-exporter');
         // Initialize the exporter
         const exporter = new TraceExporter({
             projectId: this.projectId,
@@ -57,12 +61,11 @@ module.exports = class Tracer {
         });
 
         // Configure a span processor for the tracer
-        tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
+        tracerProvider.addSpanProcessor(new BatchSpanProcessor(exporter));
 
-        // Register the tracer
-        tracerProvider.register();
-
-        const tracer = opentelemetry.trace.getTracer();
+        const name = this.projectId;
+        const version = '0.1.0';
+        const tracer = opentelemetry.trace.getTracer(name, version);
 
         return tracer;
     }
