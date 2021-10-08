@@ -2,7 +2,7 @@
   "name": "gcp-cloud-utilities",
   "version": "1.2.4",
   "description": "nodejs/express project utilities for gcp",
-  "main": "index.js", 
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,6 +16,7 @@
     "@google-cloud/pubsub": "^2.11.0",
     "@google-cloud/tasks": "^2.3.0",
     "@opentelemetry/api": "^0.18.1",
+    "@opentelemetry/instrumentation-graphql": "^0.25.0",
     "@opentelemetry/node": "^0.18.2",
     "@opentelemetry/plugin-dns": "^0.14.0",
     "@opentelemetry/plugin-express": "^0.14.0",
@@ -27,5 +28,9 @@
     "@opentelemetry/tracing": "^0.18.2",
     "bunyan": "^1.8.15",
     "mysql": "^2.18.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Trooptravel/gcp-cloud-utilities.git"
   }
 }
