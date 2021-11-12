@@ -27,7 +27,9 @@
     "@opentelemetry/plugin-mysql": "^0.14.0",
     "@opentelemetry/tracing": "^0.18.2",
     "bunyan": "^1.8.15",
-    "mysql": "^2.18.1"
+    "knex": "^0.95.14",
+    "mysql": "^2.18.1",
+    "pg": "^8.7.1"
   },
   "repository": {
     "type": "git",
