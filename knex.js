@@ -10,6 +10,7 @@ module.exports = class Knex {
    */
   constructor(config) {
     this.connectionConfig = config;
+    this.client = null;
   }
 
   /**
@@ -17,11 +18,21 @@ module.exports = class Knex {
    *
    * @param promise Bolean, to forse a promise on the return
    */
-  connect(options) {
-    return require("knex")({
+  connect(searchPath, options) {
+    this.client = require("knex")({
       client: "pg",
       connection: this.connectionConfig,
       ...options,
+      searchPath: searchPath,
     });
+    return this.client;
+  }
+
+  /**
+   * Close a pool connection
+   *
+   */
+  close() {
+    this.client.destroy();
   }
 };
